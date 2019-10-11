@@ -1,11 +1,13 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.geom.Point2D;
 
 
 import fc.RangeSlider;
@@ -15,6 +17,8 @@ public class RangeSliderUI extends JPanel{
 	public int xmax;
 	public int ymin;
 	public int ymax;
+	
+	public Interaction interaction;
 	
 	public Rectangle rectPrincipal;	//rectangle correspondant au range slider
 	public Rectangle rectg;	//rectangle correspondant au curseur gauche
@@ -32,6 +36,9 @@ public class RangeSliderUI extends JPanel{
 		rectg = new Rectangle(10,10, 10, 10);
 		rectd = new Rectangle(300,10, 10, 10);
 		rectm = new Rectangle(20,10, 280, 10);
+		setPreferredSize(new Dimension(320, 40));
+		
+		this.addMouseMotionListener(interaction);
 	}
 	
 	public void paint(Graphics g) {
@@ -45,6 +52,10 @@ public class RangeSliderUI extends JPanel{
 		g.setColor(Color.cyan);
 		g.fillRect(rectm.x, rectm.y, rectm.width, rectm.height);
 		
+		
+	}
+	
+	public void translate(Point2D p) {
 		
 	}
 	

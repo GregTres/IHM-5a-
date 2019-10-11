@@ -15,6 +15,6 @@ public class View extends JFrame{
 		
 		root.add(slider);
 		add(root);
-		setPreferredSize(new Dimension(350, 70));
+
 	}
 }
