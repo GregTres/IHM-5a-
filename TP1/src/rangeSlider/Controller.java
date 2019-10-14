@@ -19,6 +19,9 @@ class Controller extends MouseAdapter{
 			otherCurs = this.otherCursor(ui, cursor);
 			ui.translate(cursor, xCurrent-cursor.x - cursor.width/2);
 			cursor.x = xCurrent - cursor.width/2;
+			if(cursor == ui.cursorLeft)
+				ui.firstValue = (int)Math.round((ui.cursorLeft.getCenterX()-ui.XMIN)*ui.scale/ui.W);
+			else ui.secondValue = (int)Math.round((ui.cursorRight.getCenterX()-ui.XMIN)*ui.scale/ui.W);
 		}
 	}
 	
@@ -34,6 +37,9 @@ class Controller extends MouseAdapter{
 			ui.translate(cursor, xCurrent-cursor.x - cursor.width/2);
 			cursor.x = xCurrent - cursor.width/2;
 		}
+		if(cursor == ui.cursorLeft)
+			ui.firstValue = (int)Math.round((ui.cursorLeft.getCenterX()-ui.XMIN)*ui.scale/ui.W);
+		else ui.secondValue = (int)Math.round((ui.cursorRight.getCenterX()-ui.XMIN)*ui.scale/ui.W);
 	}
 	
 	private Rectangle cursorChoice(Rectangle left, Rectangle right, int xCurrent) {

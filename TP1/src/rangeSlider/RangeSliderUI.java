@@ -26,23 +26,27 @@ public class RangeSliderUI extends JPanel{
 	protected static final int XRIGHT = XMIN+W-CURSOR_WIDTH/2;
 	protected static final int YRIGHT = YMIN-CURSOR_HEIGHT/2+H/2;
 	
-	public Controller controller;
+	protected Controller controller;
 	
-	public Rectangle rectPrincipal;	//rectangle correspondant au range slider
-	public Rectangle cursorLeft;	//rectangle correspondant au curseur gauche
-	public Rectangle cursorRight;	//rectangle correspondant au curseur droite
-	public Rectangle rectMiddle;	//rectangle correspondant à la zone entre les deux curseurs
-	private int scale;				//Nombre de valeurs du range slider
+	protected Rectangle rectPrincipal;	//rectangle correspondant au range slider
+	protected Rectangle cursorLeft;	//rectangle correspondant au curseur gauche
+	protected Rectangle cursorRight;	//rectangle correspondant au curseur droite
+	protected Rectangle rectMiddle;	//rectangle correspondant à la zone entre les deux curseurs
+	public int scale;				//Nombre de valeurs du range slider
 	private Font fonte = new Font("Arial",Font.BOLD,10);
+	public int firstValue;
+	public int secondValue;
 	
 	
-	RangeSliderUI(int scale){
+	public RangeSliderUI(int scale){
 		rectPrincipal = new Rectangle(XMIN,YMIN, W, H);
 		cursorLeft = new Rectangle(XLEFT, YLEFT, CURSOR_WIDTH, CURSOR_HEIGHT);
 		cursorRight = new Rectangle(XRIGHT, YRIGHT, CURSOR_WIDTH, CURSOR_HEIGHT);
 		setPreferredSize(new Dimension(W+XMIN*2, H+2*YMIN));
 		rectMiddle = new Rectangle(XMIN,YMIN, W, H);
 		this.scale = scale;
+		this.firstValue=0;
+		this.secondValue=this.scale;
 		controller = new Controller();
 		this.addMouseMotionListener(controller);
 		this.addMouseListener(controller);
@@ -55,8 +59,8 @@ public class RangeSliderUI extends JPanel{
 		g.setColor(Color.BLACK);
 		g.fillRect((int)cursorLeft.getCenterX(),YMIN, (int)(cursorRight.getCenterX()-cursorLeft.getCenterX()), H);
 		g.setFont(fonte);
-		g.drawString(Integer.toString((int)Math.round((cursorLeft.getCenterX()-XMIN)*this.scale/W)), cursorLeft.x, cursorLeft.y-10);
-		g.drawString(Integer.toString((int)Math.round((cursorRight.getCenterX()-XMIN)*this.scale/W)), cursorRight.x, cursorRight.y-10);
+		g.drawString(Integer.toString(this.firstValue), cursorLeft.x, cursorLeft.y-10);
+		g.drawString(Integer.toString(this.secondValue), cursorRight.x, cursorRight.y-10);
 		g.setColor(Color.gray);
 		g.fillRect(cursorLeft.x, cursorLeft.y, cursorLeft.width, cursorLeft.height);
 		g.fillRect(cursorRight.x, cursorRight.y, cursorRight.width, cursorRight.height);
