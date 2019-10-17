@@ -29,7 +29,7 @@ public class Map extends JPanel{
 		this.aSlider = aSlider;
 		this.bSlider = bSlider;
 		for (int i=0 ; i<N ; i++) {
-			listHome.add(new Home(new Point((int) (Math.random()*(SIZEX-15)),(int) (Math.random()*(SIZEY-40))), (int) (Math.random()*(10)), (int) (Math.random()*(1000))));
+			listHome.add(new Home(new Point((int) (Math.random()*(SIZEX-15)),(int) (Math.random()*(SIZEY-40))), (int) (Math.random()*(10)), (int) (Math.random()*(100))));
 		}
 		setPreferredSize(new Dimension(SIZEX-15, SIZEY-40));
 		this.addMouseListener(new MouseAdapter() {
@@ -49,7 +49,7 @@ public class Map extends JPanel{
 		g.setColor(Color.BLACK);
 		for(int i = 0 ; i<N ; i++) {
 			Home home = this.listHome.get(i);
-			if(home.numberOfRoom>=this.roomSlider.firstValue && home.numberOfRoom<=this.roomSlider.secondValue && home.price>=this.priceSlider.firstValue && home.price<=this.priceSlider.secondValue && (a.x < 0 || a.x >= 0 && distance(a, home.position) > this.aSlider.firstValue && distance(a, home.position) < this.aSlider.secondValue) && (b.x < 0 || b.x >= 0 && distance(b, home.position) > this.bSlider.firstValue && distance(b, home.position) < this.bSlider.secondValue))
+			if(home.numberOfRoom>=this.roomSlider.model.firstValue && home.numberOfRoom<=this.roomSlider.model.secondValue && home.price>=this.priceSlider.model.firstValue && home.price<=this.priceSlider.model.secondValue && (a.x < 0 || a.x >= 0 && distance(a, home.position) > this.aSlider.model.firstValue && distance(a, home.position) < this.aSlider.model.secondValue) && (b.x < 0 || b.x >= 0 && distance(b, home.position) > this.bSlider.model.firstValue && distance(b, home.position) < this.bSlider.model.secondValue))
 				g.fillOval(home.position.x, home.position.y, 10, 10);
 		}
 		g.setColor(Color.blue);
@@ -58,12 +58,12 @@ public class Map extends JPanel{
 		g.drawString("B", bX-5, bY-15);
 		g.fillRect(bX-5, bY-5, 10, 10);
 		if(a.x >= 0) {
-			g.drawOval(aX-aSlider.secondValue, aY-aSlider.secondValue, aSlider.secondValue*2, aSlider.secondValue*2);
-			g.drawOval(aX-aSlider.firstValue, aY-aSlider.firstValue, aSlider.firstValue*2, aSlider.firstValue*2);
+			g.drawOval(aX-aSlider.model.secondValue, aY-aSlider.model.secondValue, aSlider.model.secondValue*2, aSlider.model.secondValue*2);
+			g.drawOval(aX-aSlider.model.firstValue, aY-aSlider.model.firstValue, aSlider.model.firstValue*2, aSlider.model.firstValue*2);
 		}
 		if(b.x >= 0) {
-			g.drawOval(bX-bSlider.secondValue, bY-bSlider.secondValue, bSlider.secondValue*2, bSlider.secondValue*2);
-			g.drawOval(bX-bSlider.firstValue, bY-bSlider.firstValue, bSlider.firstValue*2, bSlider.firstValue*2);
+			g.drawOval(bX-bSlider.model.secondValue, bY-bSlider.model.secondValue, bSlider.model.secondValue*2, bSlider.model.secondValue*2);
+			g.drawOval(bX-bSlider.model.firstValue, bY-bSlider.model.firstValue, bSlider.model.firstValue*2, bSlider.model.firstValue*2);
 		}
 			
 	}

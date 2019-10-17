@@ -10,36 +10,42 @@ class Controller extends MouseAdapter{
 	
 	Rectangle cursor;
 	Rectangle otherCurs;
+	Model model;
+	
+	public Controller(Model model) {
+		this.model = model;
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		View ui = (View) e.getSource();
+		View view = (View) e.getSource();
 		int xCurrent = e.getX();
-		if(xCurrent>ui.XMIN && xCurrent<ui.XMIN+ui.W) {
-			cursor = this.cursorChoice(ui.cursorLeft, ui.cursorRight, xCurrent);
-			otherCurs = this.otherCursor(ui, cursor);
-			ui.translate(cursor, xCurrent-cursor.x - cursor.width/2);
+		if(xCurrent>Model.XMIN && xCurrent<Model.XMIN+Model.W) {
+			cursor = this.cursorChoice(view.cursorLeft, view.cursorRight, xCurrent);
+			otherCurs = this.otherCursor(view, cursor);
+			view.translate(cursor, xCurrent-cursor.x - cursor.width/2);
 			cursor.x = xCurrent - cursor.width/2;
-			if(cursor == ui.cursorLeft)
-				ui.firstValue = (int)Math.round((ui.cursorLeft.getCenterX()-ui.XMIN)*ui.scale/ui.W);
-			else ui.secondValue = (int)Math.round((ui.cursorRight.getCenterX()-ui.XMIN)*ui.scale/ui.W);
+			if(cursor == view.cursorLeft)
+				model.firstValue = (int)Math.round((view.cursorLeft.getCenterX()-11)*view.scale/Model.W);
+			else model.secondValue = (int)Math.round((view.cursorRight.getCenterX()-11)*view.scale/Model.W);
 		}
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		View ui = (View) e.getSource();
+		View view = (View) e.getSource();
 		int xCurrent = e.getX();
 		//gère le fait que le curseur gauche (respectivement droit) reste à gauche (respectivement droite)
 		//gère le dépassement à gauche
 		//gère le dépassemnt à droite
 		//gere la collision des deux curseurs
-		if(((cursor == ui.cursorLeft && xCurrent <= otherCurs.getCenterX()) || (cursor == ui.cursorRight && xCurrent >= otherCurs.getCenterX())) && xCurrent>ui.XMIN && xCurrent<ui.XMIN+ui.W && xCurrent != otherCurs.getCenterX()) {
-			ui.translate(cursor, xCurrent-cursor.x - cursor.width/2);
+		if(((cursor == view.cursorLeft && xCurrent <= otherCurs.getCenterX()) || (cursor == view.cursorRight && xCurrent >= otherCurs.getCenterX())) && xCurrent>Model.XMIN && xCurrent<Model.XMIN+Model.W && xCurrent != otherCurs.getCenterX()) {
+			view.translate(cursor, xCurrent-cursor.x - cursor.width/2);
 			cursor.x = xCurrent - cursor.width/2;
 		}
-		if(cursor == ui.cursorLeft)
-			ui.firstValue = (int)Math.round((ui.cursorLeft.getCenterX()-ui.XMIN)*ui.scale/ui.W);
-		else ui.secondValue = (int)Math.round((ui.cursorRight.getCenterX()-ui.XMIN)*ui.scale/ui.W);
+		if(cursor == view.cursorLeft)
+			model.firstValue = (int)Math.round((view.cursorLeft.getCenterX()-11)*view.scale/Model.W);
+		else model.secondValue = (int)Math.round((view.cursorRight.getCenterX()-11)*view.scale/Model.W);
 	}
 	
 	private Rectangle cursorChoice(Rectangle left, Rectangle right, int xCurrent) {
@@ -49,10 +55,10 @@ class Controller extends MouseAdapter{
 		else return right;
 	}
 	
-	private Rectangle otherCursor(View ui, Rectangle curs) {
-		if(curs==ui.cursorLeft)
-			return ui.cursorRight;
-		else return ui.cursorLeft;
+	private Rectangle otherCursor(View view, Rectangle curs) {
+		if(curs==view.cursorLeft)
+			return view.cursorRight;
+		else return view.cursorLeft;
 	}
 
 }

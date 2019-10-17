@@ -11,48 +11,33 @@ import javax.swing.JPanel;
 import java.awt.geom.Point2D;
 
 public class View extends JPanel{
-	//Corps du slider
-	protected static final int XMIN = 10;
-	protected static final int YMIN = 50;
-	protected static final int W = 300;
-	protected static final int H = 4;
-	//Hauteur et largeur des curseurs
-	protected static final int CURSOR_HEIGHT = 20;
-	protected static final int CURSOR_WIDTH = 10;
-	//x et y curseur gauche
-	protected static final int XLEFT = XMIN-CURSOR_WIDTH/2;
-	protected static final int YLEFT = YMIN-CURSOR_HEIGHT/2+H/2;
-	//x et y curseur droit
-	protected static final int XRIGHT = XMIN+W-CURSOR_WIDTH/2;
-	protected static final int YRIGHT = YMIN-CURSOR_HEIGHT/2+H/2;
 	
+	public Model model;
 	protected Controller controller;
-	
 	protected Rectangle rectPrincipal;	//rectangle correspondant au range slider
 	protected Rectangle cursorLeft;	//rectangle correspondant au curseur gauche
 	protected Rectangle cursorRight;	//rectangle correspondant au curseur droite
 	protected Rectangle rectMiddle;	//rectangle correspondant à la zone entre les deux curseurs
-	public int scale;				//Nombre de valeurs du range slider
 	private Font fonte = new Font("Arial",Font.BOLD,10);
 	private Font fonte2 = new Font("Roboto",Font.BOLD,15);
-	public int firstValue;
-	public int secondValue;
 	private String title;
+	public int scale;				//Nombre de valeurs du range slider
 	
 	
 	public View(int scale, String title){
 		this.title = title;
-		rectPrincipal = new Rectangle(XMIN,YMIN, W, H);
-		cursorLeft = new Rectangle(XLEFT, YLEFT, CURSOR_WIDTH, CURSOR_HEIGHT);
-		cursorRight = new Rectangle(XRIGHT, YRIGHT, CURSOR_WIDTH, CURSOR_HEIGHT);
-		setPreferredSize(new Dimension(W+XMIN*2, H+2*YMIN));
-		rectMiddle = new Rectangle(XMIN,YMIN, W, H);
 		this.scale = scale;
-		this.firstValue=0;
-		this.secondValue=this.scale;
-		controller = new Controller();
+		this.model = new Model();
+		this.model.firstValue=0;
+		this.model.secondValue=this.scale;
+		controller = new Controller(model);
 		this.addMouseMotionListener(controller);
 		this.addMouseListener(controller);
+		this.rectPrincipal = new Rectangle(Model.XMIN,Model.YMIN, Model.W, Model.H);
+		this.cursorLeft = new Rectangle(Model.XLEFT, Model.YLEFT, Model.CURSOR_WIDTH, Model.CURSOR_HEIGHT);
+		this.cursorRight = new Rectangle(Model.XRIGHT, Model.YRIGHT, Model.CURSOR_WIDTH, Model.CURSOR_HEIGHT);
+		this.rectMiddle = new Rectangle(Model.XMIN,Model.YMIN, Model.W, Model.H);
+		this.setPreferredSize(new Dimension(Model.W+Model.XMIN*2, Model.H+2*Model.YMIN));
 	}
 	
 	public void paint(Graphics g) {
@@ -62,10 +47,10 @@ public class View extends JPanel{
 		g.setColor(Color.BLACK);
 		g.setFont(fonte2);
 		g.drawString(this.title, 30, 15);
-		g.fillRect((int)cursorLeft.getCenterX(),YMIN, (int)(cursorRight.getCenterX()-cursorLeft.getCenterX()), H);
+		g.fillRect((int)cursorLeft.getCenterX(),Model.YMIN, (int)(cursorRight.getCenterX()-cursorLeft.getCenterX()), Model.H);
 		g.setFont(fonte);
-		g.drawString(Integer.toString(this.firstValue), cursorLeft.x, cursorLeft.y-10);
-		g.drawString(Integer.toString(this.secondValue), cursorRight.x, cursorRight.y-10);
+		g.drawString(Integer.toString(this.model.firstValue), cursorLeft.x, cursorLeft.y-10);
+		g.drawString(Integer.toString(this.model.secondValue), cursorRight.x, cursorRight.y-10);
 		g.setColor(Color.gray);
 		g.fillRect(cursorLeft.x, cursorLeft.y, cursorLeft.width, cursorLeft.height);
 		g.fillRect(cursorRight.x, cursorRight.y, cursorRight.width, cursorRight.height);
