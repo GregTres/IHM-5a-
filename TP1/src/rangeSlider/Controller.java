@@ -12,7 +12,7 @@ class Controller extends MouseAdapter{
 	Rectangle otherCurs;
 	@Override
 	public void mousePressed(MouseEvent e) {
-		RangeSliderUI ui = (RangeSliderUI) e.getSource();
+		View ui = (View) e.getSource();
 		int xCurrent = e.getX();
 		if(xCurrent>ui.XMIN && xCurrent<ui.XMIN+ui.W) {
 			cursor = this.cursorChoice(ui.cursorLeft, ui.cursorRight, xCurrent);
@@ -27,7 +27,7 @@ class Controller extends MouseAdapter{
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		RangeSliderUI ui = (RangeSliderUI) e.getSource();
+		View ui = (View) e.getSource();
 		int xCurrent = e.getX();
 		//gère le fait que le curseur gauche (respectivement droit) reste à gauche (respectivement droite)
 		//gère le dépassement à gauche
@@ -49,7 +49,7 @@ class Controller extends MouseAdapter{
 		else return right;
 	}
 	
-	private Rectangle otherCursor(RangeSliderUI ui, Rectangle curs) {
+	private Rectangle otherCursor(View ui, Rectangle curs) {
 		if(curs==ui.cursorLeft)
 			return ui.cursorRight;
 		else return ui.cursorLeft;
