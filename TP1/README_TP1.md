@@ -5,7 +5,7 @@ Le but de ce premier TP est d'implémenter un Range Slider, puis un Home Finder 
 Nous avons réalisé l'ensemble des consignes demandées pour ce TP, y compris le home finder et le bonus.
 Il y a deux package : homeFinder et rangeSlider.
 
-##RangeSlider
+## RangeSlider
 
 Le package rangeSlider contient 4 classes basées sur une architecture MVC.
 Le main créé une frame et ajoute à cette frame deux range slider avec des valeures différentes.
@@ -15,7 +15,7 @@ De plus la vue ajoute donc des listeners qui sont basés sur la classe Controlle
 
 Pour essayer les range slider il faut lancer la classe main du package rangeSlider. Ensuite il est possible de cliquer entre les deux curseurs, cela va ramener le curseur le plus près à l'endroit du clique. Il est aussi possible de drag le curseur. Une zone noir indique l'intervalle entre les deux curseurs.
 
-##HomeFinder
+## HomeFinder
 
 Le package homeFinder contient 4 classes : Home, Map, HomeFinderFrame et Main.
 Home est la classe représentant une maison (position, nombre de pieces et prix).
