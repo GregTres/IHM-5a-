@@ -16,10 +16,10 @@ public class Main {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 List<String> listMarking = new ArrayList<String>();
-		 listMarking.add("Outils");
-		 listMarking.add("Couleur");
-		 listMarking.add("Annuler");
+		List<String> listMarking = new ArrayList<String>();
+		listMarking.add("Outils");
+		listMarking.add("Couleur");
+		listMarking.add("Annuler");
 		frame.add(new View(listMarking));
 		frame.setVisible(true);
 	}
