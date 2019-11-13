@@ -1,4 +1,4 @@
-package markingMenu;
+package finalPaint;
 
 import java.awt.event.MouseEvent;
 
@@ -12,7 +12,7 @@ public class Controller {
 		model.positionX = e.getX();
 		model.positionY = e.getY();
 	}
-	public void released() {
+	public void released(MouseEvent e) {
 		model.positionX = -1000;
 		model.positionY = -1000;
 		model.newX = -1000;

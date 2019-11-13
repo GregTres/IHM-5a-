@@ -6,10 +6,10 @@ import java.awt.Shape;
 
 public class ColorShape {
 
-	Color color;
-	Shape shape;
+	public Color color;
+	public Shape shape;
 	
-	ColorShape(Color c, Shape s){
+	public ColorShape(Color c, Shape s){
 		color = c;
 		shape = s;
 	}

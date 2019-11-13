@@ -1,27 +1,34 @@
 package markingMenu;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
 
+import paint.ColorShape;
+
 public class View extends JPanel {
-	Model model;
+	public Model model;
 	Controller controller;
 	private Font fonte = new Font("Roboto",Font.BOLD,15);
 	
 	public View(List<String> sousMenu) {
 		this.model = new Model();
 		this.controller = new Controller(model);
+		this.setOpaque(false);
 		model.listSousMenu = sousMenu;
 		this.addMouseMotionListener(new MouseAdapter() {
 			@Override
-			public void mouseDragged(MouseEvent e) {
+			public void mouseMoved(MouseEvent e) {
 				controller.dragged(e);
 				repaint();
 			 }
@@ -32,17 +39,11 @@ public class View extends JPanel {
 				 controller.pressed(e);
 				 repaint();
 			 }
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				 controller.released(e);
-				 repaint();
-			 }
 		});
 	}
 	
 
 	public void paint(Graphics g) {
-		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		if(model.positionX >= 0) {
 			//rond central
 			g.setColor(Color.gray);
@@ -88,16 +89,22 @@ public class View extends JPanel {
 					model.choixMenu = (String) listMenu.get(0);
 					model.listSousMenu.clear();
 					model.listSousMenu.add("Rect");
-					model.listSousMenu.add("Line");
+					model.listSousMenu.add("Pen");
 					model.listSousMenu.add("Ellipse");
 				 }
 				else if((String) listMenu.get(0) == "Rect") {
 					System.out.println("rect");
 					model.choixMenu = (String) listMenu.get(0);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(0) == "Red") {
 					System.out.println("Red");
 					model.choixMenu = (String) listMenu.get(0);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				repaint();
 			}
@@ -114,13 +121,17 @@ public class View extends JPanel {
 					model.listSousMenu.add("Green");
 					model.listSousMenu.add("Blue");
 				 }
-				else if((String) listMenu.get(1) == "Line") {
-					System.out.println("Line");
+				else if((String) listMenu.get(1) == "Pen") {
 					model.choixMenu = (String) listMenu.get(1);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(1) == "Green") {
-					System.out.println("Green");
 					model.choixMenu = (String) listMenu.get(1);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				repaint();
 			}
@@ -129,12 +140,16 @@ public class View extends JPanel {
 			g.drawString((String) listMenu.get(2), model.positionX+Model.RECTWIDTH/2+20, model.positionY-Model.RECTHEIGHT/2+15);
 			if(model.newX > model.positionX+Model.RECTWIDTH/2 && model.newX < model.positionX+Model.RECTWIDTH/2 + Model.RECTWIDTH && model.newY > model.positionY-Model.RECTHEIGHT/2 && model.newY < model.positionY-Model.RECTHEIGHT/2+ Model.RECTHEIGHT) {
 				if((String) listMenu.get(2) == "Ellipse") {
-					System.out.println("Ellipse");
 					model.choixMenu = (String) listMenu.get(2);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(2) == "Blue") {
-					System.out.println("Blue");
 					model.choixMenu = (String) listMenu.get(2);
+					controller.released();
+					this.setVisible(false);
+					model.isOpen=false;
 				 }
 				repaint();
 			}
