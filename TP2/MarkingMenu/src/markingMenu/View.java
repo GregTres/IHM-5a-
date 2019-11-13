@@ -61,7 +61,7 @@ public class View extends JPanel {
 	
 	public void drawRectangles(Graphics g, List listMenu) {
 		g.setFont(fonte);
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(new Color(160,160,160));
 		g.fillRoundRect(model.positionX-Model.RECTWIDTH/2, model.positionY-Model.RECTHEIGHT/2-60, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.fillRoundRect(model.positionX+Model.RECTWIDTH/4, model.positionY-Model.RECTHEIGHT/2-30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.fillRoundRect(model.positionX+Model.RECTWIDTH/2, model.positionY-Model.RECTHEIGHT/2, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
@@ -70,7 +70,7 @@ public class View extends JPanel {
 		g.fillRoundRect(model.positionX-Model.RECTWIDTH/4-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2+30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.fillRoundRect(model.positionX-Model.RECTWIDTH/2-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.fillRoundRect(model.positionX-Model.RECTWIDTH/4-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2-30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
-		g.setColor(Color.BLACK);
+		g.setColor(new Color(120,120,120));
 		g.drawRoundRect(model.positionX-Model.RECTWIDTH/2, model.positionY-Model.RECTHEIGHT/2-60, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.drawRoundRect(model.positionX+Model.RECTWIDTH/4, model.positionY-Model.RECTHEIGHT/2-30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.drawRoundRect(model.positionX+Model.RECTWIDTH/2, model.positionY-Model.RECTHEIGHT/2, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
@@ -79,29 +79,27 @@ public class View extends JPanel {
 		g.drawRoundRect(model.positionX-Model.RECTWIDTH/4-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2+30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.drawRoundRect(model.positionX-Model.RECTWIDTH/2-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
 		g.drawRoundRect(model.positionX-Model.RECTWIDTH/4-Model.RECTWIDTH, model.positionY-Model.RECTHEIGHT/2-30, Model.RECTWIDTH, Model.RECTHEIGHT,5,5);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.white);
 		if(listMenu.size()>0) {
 			g.drawString((String) listMenu.get(0), model.positionX-Model.RECTWIDTH/2+20, model.positionY-Model.RECTHEIGHT/2-60+15);
 			if(model.newX > model.positionX-Model.RECTWIDTH/2 && model.newX < model.positionX-Model.RECTWIDTH/2 + Model.RECTWIDTH && model.newY > model.positionY-Model.RECTHEIGHT/2-60 && model.newY < model.positionY-Model.RECTHEIGHT/2-60 + Model.RECTHEIGHT) {
 				if((String) listMenu.get(0) == "Outils") {
 					model.positionX = model.newX;
 					model.positionY = model.newY;
-					model.choixMenu = (String) listMenu.get(0);
+					model.choixMenuOutils = (String) listMenu.get(0);
 					model.listSousMenu.clear();
 					model.listSousMenu.add("Rect");
 					model.listSousMenu.add("Pen");
 					model.listSousMenu.add("Ellipse");
 				 }
 				else if((String) listMenu.get(0) == "Rect") {
-					System.out.println("rect");
-					model.choixMenu = (String) listMenu.get(0);
+					model.choixMenuOutils = (String) listMenu.get(0);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(0) == "Red") {
-					System.out.println("Red");
-					model.choixMenu = (String) listMenu.get(0);
+					model.choixMenuCouleur = (String) listMenu.get(0);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;
@@ -115,20 +113,20 @@ public class View extends JPanel {
 				if((String) listMenu.get(1) == "Couleur") {
 					model.positionX = model.newX;
 					model.positionY = model.newY;
-					model.choixMenu = (String) listMenu.get(1);
+					model.choixMenuCouleur = (String) listMenu.get(1);
 					model.listSousMenu.clear();
 					model.listSousMenu.add("Red");
 					model.listSousMenu.add("Green");
 					model.listSousMenu.add("Blue");
 				 }
 				else if((String) listMenu.get(1) == "Pen") {
-					model.choixMenu = (String) listMenu.get(1);
+					model.choixMenuOutils = (String) listMenu.get(1);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(1) == "Green") {
-					model.choixMenu = (String) listMenu.get(1);
+					model.choixMenuCouleur = (String) listMenu.get(1);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;
@@ -140,13 +138,13 @@ public class View extends JPanel {
 			g.drawString((String) listMenu.get(2), model.positionX+Model.RECTWIDTH/2+20, model.positionY-Model.RECTHEIGHT/2+15);
 			if(model.newX > model.positionX+Model.RECTWIDTH/2 && model.newX < model.positionX+Model.RECTWIDTH/2 + Model.RECTWIDTH && model.newY > model.positionY-Model.RECTHEIGHT/2 && model.newY < model.positionY-Model.RECTHEIGHT/2+ Model.RECTHEIGHT) {
 				if((String) listMenu.get(2) == "Ellipse") {
-					model.choixMenu = (String) listMenu.get(2);
+					model.choixMenuOutils = (String) listMenu.get(2);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;
 				 }
 				else if((String) listMenu.get(2) == "Blue") {
-					model.choixMenu = (String) listMenu.get(2);
+					model.choixMenuCouleur = (String) listMenu.get(2);
 					controller.released();
 					this.setVisible(false);
 					model.isOpen=false;

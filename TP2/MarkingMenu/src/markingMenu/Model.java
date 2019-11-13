@@ -12,7 +12,8 @@ public class Model {
 	public int positionY = -1000;
 	int newX = -1000;
 	int newY = -1000;
-	public String choixMenu = "";
+	public String choixMenuCouleur = "none";
+	public String choixMenuOutils = "none";
 	List<String> listSousMenu = new ArrayList<String>();
 	public Boolean isOpen = false;
 }

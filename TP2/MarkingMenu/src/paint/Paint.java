@@ -45,23 +45,25 @@ class Paint extends JFrame {
 	Color c = Color.BLACK;
 	List<String> listMarking = new ArrayList<String>();
 	View view;
-	
 	Point o;
 	Shape shape;
+	Shape lastShape;
 	String name;
-	
 	JPanel panel;
 
 	public Paint(String title) {
 		super(title);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
+		//création du marking menu et ajout dans la frame
 		listMarking.add("Outils");
 		listMarking.add("Couleur");
 		listMarking.add("Annuler");
 		this.add(this.view = new View(listMarking));
 		this.setVisible(true);
+		//cache le marking menu
 		view.setVisible(false);
+		//ajout des listeners sur le panel
 		add(panel = new JPanel() {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -81,37 +83,43 @@ class Paint extends JFrame {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				//clic gauche : recuperation du point puis dessin
 				if(e.getButton() == MouseEvent.BUTTON1)
 					o = e.getPoint();
-					
+				//clic droit : envoie du point courant au marking menu puis affichage de celui ci 
 				if(e.getButton() == MouseEvent.BUTTON3) {
-					view.setVisible(true);
-					view.model.isOpen = true;
 					view.model.positionX = e.getX();
 					view.model.positionY = e.getY();
-					switch(view.model.choixMenu) {
-					case "Blue" : {
-						c = Color.blue;
-					}
-					break;
-					case "Red" : {
-						c = Color.red;
-					}
-					break;
-					case "Green" : {
-						c = Color.green;
-					}
-					break;
-					}
+					view.setVisible(true);
+					view.model.isOpen = true;
 				}
 			}
 			public void mouseReleased(MouseEvent e) {
+				lastShape = shape;
 				shape = null;
 			}
 		});
 		panel.addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
-				switch(view.model.choixMenu) {
+				
+				//Récupération de la couleur qui se trouve dans le model du marking menu
+				switch(view.model.choixMenuCouleur) {
+				case "Blue" : {
+					c = Color.blue;
+				}
+				break;
+				case "Red" : {
+					c = Color.red;
+				}
+				break;
+				case "Green" : {
+					c = Color.green;
+				}
+				break;
+				}
+				
+				//Récuperation de l'outil qui se trouve dans le model du marking menu
+				switch(view.model.choixMenuOutils) {
 				case "Ellipse" : {
 					Ellipse2D.Double ellispe = (Ellipse2D.Double) shape;
 					if (ellispe == null) {
@@ -145,8 +153,7 @@ class Paint extends JFrame {
 					panel.repaint();
 				}
 					break;
-				default : 
-				{
+				case "none" : {
 					Path2D.Double path = (Path2D.Double) shape;
 					if (path == null) {
 						path = new Path2D.Double();
@@ -154,7 +161,9 @@ class Paint extends JFrame {
 						colorshapes.add(new ColorShape(c,shape = path));
 					}
 					path.lineTo(e.getX(), e.getY());
-					panel.repaint();}
+					panel.repaint();
+				}
+					break;
 				}
 			}
 		});
