@@ -20,6 +20,7 @@ public class Controller {
 		model.listSousMenu.clear();
 		model.listSousMenu.add("Outils");
 		model.listSousMenu.add("Couleur");
+		model.listSousMenu.add("Annuler");
 	}
 	public void dragged(MouseEvent e) {
 		model.newX = e.getX();

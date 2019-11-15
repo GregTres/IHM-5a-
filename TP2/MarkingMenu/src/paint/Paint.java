@@ -22,11 +22,13 @@ import java.awt.Shape;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
+import java.awt.geom.RoundRectangle2D;
 import java.awt.event.*;
 import javax.swing.event.*;
 
@@ -34,7 +36,9 @@ import markingMenu.View;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
@@ -75,8 +79,11 @@ class Paint extends JFrame {
 
 				for (ColorShape colorshape : colorshapes) {
 					g2.setColor(colorshape.color);
-
-					g2.draw(colorshape.shape);
+					if(colorshape.fill) {
+						g2.fill(colorshape.shape);
+					}
+					else
+						g2.draw(colorshape.shape);
 				}
 			}
 		});
@@ -101,72 +108,152 @@ class Paint extends JFrame {
 		});
 		panel.addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
-				
-				//Récupération de la couleur qui se trouve dans le model du marking menu
-				switch(view.model.choixMenuCouleur) {
-				case "Blue" : {
-					c = Color.blue;
-				}
-				break;
-				case "Red" : {
-					c = Color.red;
-				}
-				break;
-				case "Green" : {
-					c = Color.green;
-				}
-				break;
-				}
-				
-				//Récuperation de l'outil qui se trouve dans le model du marking menu
-				switch(view.model.choixMenuOutils) {
-				case "Ellipse" : {
-					Ellipse2D.Double ellispe = (Ellipse2D.Double) shape;
-					if (ellispe == null) {
-						ellispe = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
-						colorshapes.add(new ColorShape(c,shape = ellispe));
+				if(SwingUtilities.isLeftMouseButton(e)) {
+					//Récupération de la couleur qui se trouve dans le model du marking menu
+					switch(view.model.choixMenuCouleur) {
+					case "Blue" : {
+						c = Color.blue;
 					}
-					ellispe.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
-							abs(e.getY() - o.getY()));
-					panel.repaint();
-				}
 					break;
-				case "Rect" : {
-					Rectangle2D.Double rect = (Rectangle2D.Double) shape;
-					if (rect == null) {
-						rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
-						colorshapes.add(new ColorShape(c,shape = rect));
+					case "Red" : {
+						c = Color.red;
 					}
-					rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
-							abs(e.getY() - o.getY()));
-					panel.repaint();
-				}
 					break;
-				case "Pen" : {
-					Path2D.Double path = (Path2D.Double) shape;
-					if (path == null) {
-						path = new Path2D.Double();
-						path.moveTo(o.getX(), o.getY());
-						colorshapes.add(new ColorShape(c,shape = path));
+					case "Green" : {
+						c = Color.green;
 					}
-					path.lineTo(e.getX(), e.getY());
-					panel.repaint();
-				}
 					break;
-				case "none" : {
-					Path2D.Double path = (Path2D.Double) shape;
-					if (path == null) {
-						path = new Path2D.Double();
-						path.moveTo(o.getX(), o.getY());
-						colorshapes.add(new ColorShape(c,shape = path));
+					case "Yellow" : {
+						c = Color.yellow;
 					}
-					path.lineTo(e.getX(), e.getY());
-					panel.repaint();
-				}
 					break;
+					case "Grey" : {
+						c = Color.gray;
+					}
+					break;
+					case "Orange" : {
+						c = Color.orange;
+					}
+					break;
+					case "Cyan" : {
+						c = Color.cyan;
+					}
+					break;
+					case "Black" : {
+						c = Color.black;
+					}
+					break;
+					}
+					
+					//Récuperation de l'outil qui se trouve dans le model du marking menu
+					switch(view.model.choixMenuOutils) {
+					case "Ellipse" : {
+						Ellipse2D.Double ellispe = (Ellipse2D.Double) shape;
+						if (ellispe == null) {
+							ellispe = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
+							colorshapes.add(new ColorShape(c,shape = ellispe, false));
+						}
+						ellispe.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+								abs(e.getY() - o.getY()));
+						panel.repaint();
+					}
+						break;
+					case "Rect" : {
+						Rectangle2D.Double rect = (Rectangle2D.Double) shape;
+						if (rect == null) {
+							rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
+							colorshapes.add(new ColorShape(c,shape = rect, false));
+						}
+						rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+								abs(e.getY() - o.getY()));
+						panel.repaint();
+					}
+						break;
+					case "Pen" : {
+						Path2D.Double path = (Path2D.Double) shape;
+						if (path == null) {
+							path = new Path2D.Double();
+							path.moveTo(o.getX(), o.getY());
+							colorshapes.add(new ColorShape(c,shape = path, false));
+						}
+						path.lineTo(e.getX(), e.getY());
+						panel.repaint();
+					}
+						break;
+					case "Line" : {
+						Line2D.Double line = (Line2D.Double) shape;
+						if (line == null) {
+							line = new Line2D.Double(o.getX(), o.getY(), 0, 0);
+							colorshapes.add(new ColorShape(c,shape = line, false));
+						}
+						line.setLine(o.getX(), o.getY(), e.getX(),
+								e.getY());
+						panel.repaint();
+					}
+						break;
+					case "Fill rect" : {
+						Rectangle2D.Double rect = (Rectangle2D.Double) shape;
+						if (rect == null) {
+							rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
+							colorshapes.add(new ColorShape(c,shape = rect, true));
+						}
+						rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+								abs(e.getY() - o.getY()));
+						panel.repaint();
+					}
+						break;
+					case "Fill ellipse" : {
+						Ellipse2D.Double ell = (Ellipse2D.Double) shape;
+						if (ell == null) {
+							ell = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
+							colorshapes.add(new ColorShape(c,shape = ell, true));
+						}
+						ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+								abs(e.getY() - o.getY()));
+						panel.repaint();
+					}
+						break;
+					case "RoundRec" : {
+						RoundRectangle2D.Double rect = (RoundRectangle2D.Double) shape;
+						if (rect == null) {
+							rect = new RoundRectangle2D.Double(o.getX(), o.getY(), 0, 0, 0, 0);
+							colorshapes.add(new ColorShape(c,shape = rect, false));
+						}
+						rect.setRoundRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+								abs(e.getY() - o.getY()), 20, 20);
+						panel.repaint();
+					}
+						break;
+					case "none" : {
+						Path2D.Double path = (Path2D.Double) shape;
+						if (path == null) {
+							path = new Path2D.Double();
+							path.moveTo(o.getX(), o.getY());
+							colorshapes.add(new ColorShape(c,shape = path, false));
+						}
+						path.lineTo(e.getX(), e.getY());
+						panel.repaint();
+					}
+						break;
+					}
 				}
 			}
 		});
+		JToggleButton expert = new JToggleButton();
+		expert.setText("Expert");
+		expert.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(view.model.isExpert) {
+					view.model.isExpert = false;
+				}
+				else{
+					view.model.isExpert = true;
+				}
+			}
+		});
+		expert.setVisible(true);
+		panel.add(expert);
 		pack();
 		setVisible(true);
 	}

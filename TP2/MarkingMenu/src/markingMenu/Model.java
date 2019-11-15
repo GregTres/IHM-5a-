@@ -16,4 +16,5 @@ public class Model {
 	public String choixMenuOutils = "none";
 	List<String> listSousMenu = new ArrayList<String>();
 	public Boolean isOpen = false;
+	public Boolean isExpert = false;
 }
