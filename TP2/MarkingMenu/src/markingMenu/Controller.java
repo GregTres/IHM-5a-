@@ -12,11 +12,15 @@ public class Controller {
 		model.positionX = e.getX();
 		model.positionY = e.getY();
 	}
-	public void released(MouseEvent e) {
+	public void released() {
 		model.positionX = -1000;
 		model.positionY = -1000;
 		model.newX = -1000;
 		model.newY = -1000;
+		model.listSousMenu.clear();
+		model.listSousMenu.add("Outils");
+		model.listSousMenu.add("Couleur");
+		model.listSousMenu.add("Annuler");
 	}
 	public void dragged(MouseEvent e) {
 		model.newX = e.getX();
