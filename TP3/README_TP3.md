@@ -1,10 +1,7 @@
-# TP3_IHM2_Polytech
+# TP3_IHM2_Polytech RIVOIRE Antoine TRESTOUR Grégory
 
 ## TP3 IHM Avancée - INFO5 Polytech - 2019-2020
 
-But du TP : 
-
-**Deadline de remise du TP :** A définir.
-
-**Modalités de remise du TP :** Partagez le dépôt Git de votre groupe avec les enseignants pour que nous puissions accéder à votre travail. Nous récupérerons vos projets directement sur ces dépôts juste après la deadline. 
-Pensez à ajouter un Readme dans votre dépôt avec le nom des membres du groupe et une courte explication de ce que vous avez effectué : quels sont vos choix de conceptions, quels éléments ont été implémentés, quelles touches utiliser pour interagir avec votre solution, etc. Aucun rapport de TP n'est attendu.
+Nous avons modifié les fichiers transfo.ts (modification de la matrice) que nous utilisons dans  Mttransition.ts.
+Cela nous permet de pouvoir dragger et rotozoomer les images ainsi que la vidéo.
+La translation se fait à un doigt et le rotozoom à deux doigts.
